@@ -2,8 +2,8 @@
 
 
 entity UserExt {
-	userAge Integer,
-    userSex SexGender
+	userAge Integer required,
+    userSex SexGender  
 }
 
 
@@ -16,21 +16,21 @@ entity Video{
     videoDate ZonedDateTime,
     videoViewerCount Integer,
     videoViewerCountLive Integer,
-    videoUrl String
+    videoUrl String    
    	}
-
+    
 entity Team {
 
 	teamName String,
     teamAvatar ImageBlob,
-    teamWin Integer
+    teamWin Integer   
 }
-
+  
 entity Tournament{
 tournamentName String,
 tournamentDate ZonedDateTime,
 tournamentImage ImageBlob
-}
+}  
 
 entity Player{
  playerName String,
@@ -45,7 +45,8 @@ entity Player{
 
 
 entity Country {
-	countryName String
+	countryName String,
+    coutryFlag ImageBlob
 }
 /** Enums**/
 enum SexGender {
@@ -56,12 +57,12 @@ entity Friendship {
 	startDateTime ZonedDateTime,
     finshDateTime ZonedDateTime
     }
-
+    
 entity UserLikedVideo {
 startDateTime ZonedDateTime,
 userLiked Boolean
 }
-
+ 
  entity UserLikedPlayer {
 startDateTime ZonedDateTime,
 userLiked Boolean
@@ -119,13 +120,15 @@ relationship ManyToMany {
 	Tournament{teamName} to Team{tournamentName}
 }
 
-relationship OneToMany{
-Video{} to Tournament,
-Tournament{video(} to Video
+relationship ManyToOne {
+Player{country(countryName)} to Country{player} 
 }
 
-
+relationship ManyToOne{
+Video{tournament(tournamentName)} to Tournament{video} 
+}
 
 relationship OneToOne{
 UserExt{user} to User{userExt}
 }
+
